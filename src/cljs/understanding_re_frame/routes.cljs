@@ -29,6 +29,9 @@
   (defroute "/components" []
     (re-frame/dispatch [::events/set-active-panel :components-panel]))
 
+    (defroute "/hiccup" []
+    (re-frame/dispatch [::events/set-active-panel :hiccup-panel]))
+
 
   ;; --------------------
   (hook-browser-navigation!))

@@ -1,7 +1,8 @@
 (ns understanding-re-frame.views
   (:require [re-frame.core :as re-frame]
             [understanding-re-frame.subs :as subs]
-            [understanding-re-frame.components :as comps]))
+            [understanding-re-frame.components :as comps]
+            [understanding-re-frame.hiccup :as hiccup]))
 
 
 ;; home
@@ -26,6 +27,7 @@
     :home-panel [home-panel]
     :about-panel [about-panel]
     :components-panel [comps/components-panel]
+    :hiccup-panel [hiccup/hiccup-panel]
     [:div]))
 
 (defn show-panel [panel-name]
@@ -37,4 +39,5 @@
      [show-panel @active-panel]
      [:hr]
      [:ul
-      [:li [:a {:href "#/components"} "Components"]]]]))
+      [:li [:a {:href "#/components"} "Components"]]
+      [:li [:a {:href "#/hiccup"} "Hiccup"]]]]))
