@@ -26,6 +26,9 @@
   (defroute "/about" []
     (re-frame/dispatch [::events/set-active-panel :about-panel]))
 
+  (defroute "/components" []
+    (re-frame/dispatch [::events/set-active-panel :components-panel]))
+
 
   ;; --------------------
   (hook-browser-navigation!))

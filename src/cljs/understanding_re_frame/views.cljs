@@ -1,7 +1,7 @@
 (ns understanding-re-frame.views
   (:require [re-frame.core :as re-frame]
             [understanding-re-frame.subs :as subs]
-            ))
+            [understanding-re-frame.components :as comps]))
 
 
 ;; home
@@ -25,6 +25,7 @@
   (case panel-name
     :home-panel [home-panel]
     :about-panel [about-panel]
+    :components-panel [comps/components-panel]
     [:div]))
 
 (defn show-panel [panel-name]
@@ -32,4 +33,8 @@
 
 (defn main-panel []
   (let [active-panel (re-frame/subscribe [::subs/active-panel])]
-    [show-panel @active-panel]))
+    [:div
+     [show-panel @active-panel]
+     [:hr]
+     [:ul
+      [:li [:a {:href "#/components"} "Components"]]]]))
