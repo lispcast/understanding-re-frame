@@ -1,6 +1,6 @@
 (defproject understanding-re-frame "0.1.0-SNAPSHOT"
   :dependencies [[org.clojure/clojure "1.8.0"]
-                 [org.clojure/clojurescript "1.9.908"]
+                 [org.clojure/clojurescript "1.9.946"]
                  [reagent "0.7.0"]
                  [re-frame "0.10.2"]
                  [secretary "1.2.3"]
@@ -47,7 +47,8 @@
                     :source-map-timestamp true
                     :preloads             [devtools.preload
                                            day8.re-frame.trace.preload
-                                           re-frisk.preload]
+                                           re-frisk.preload
+                                           ]
                     :closure-defines      {"re_frame.trace.trace_enabled_QMARK_" true}
                     :external-config      {:devtools/config {:features-to-install :all}}
                     }}
