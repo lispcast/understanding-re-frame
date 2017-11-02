@@ -6,6 +6,8 @@
     [:div {:class "content"}
      [:h1 "Hiccup"]
      [:p "This is a message"]
+     [:input {:type :checkbox
+              :checked false}]
      [:p "Another paragraph."]
      [:p [:a {:href "#/"} "Home"]]
      [:p "Some more. " [:b "And this is bold"]]]))
