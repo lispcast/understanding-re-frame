@@ -9,16 +9,13 @@
   (let [title "Hello"
         border-color "green"
         active? true]
-    [:div {:class (cs
-                    "content"
-                    "row"
-                    (when active? "active"))
-           :style {:padding-left "10%"
-                   :border (when border-color
-                             (str "1px solid " border-color))}}
-     [:h1 "Hiccup"]
-     [:p
-      {:class "first-paragraph bold-text"}
+    [:div#main-content.content.row
+     {:class (when active? "active")
+      :style {:padding-left "10%"
+              :border (when border-color
+                        (str "1px solid " border-color))}}
+     [:h1#hiccup.big.centered "Hiccup"]
+     [:p.first-paragraph.bold-text
       "This is a message"]
      [:input {:type :checkbox
               :checked false}]
