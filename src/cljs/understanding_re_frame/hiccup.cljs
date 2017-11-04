@@ -5,6 +5,20 @@
 (defn cs [& args]
   (str/join " " (map name (filter identity args))))
 
+(defn subcomponent [txt]
+  [:div.wrapper
+   {:style {}
+    :on-click (fn [e]
+                (js/console.log "Wrapper Div"))}
+   [:div.container>div.inner
+    {:on-click (fn [e]
+                 (.stopPropagation e)
+                 (js/console.log "Inner Div.")
+                 ;;(js/console.log (.-target e))
+                 )}
+    [:p "some content"]
+    [:p txt]]])
+
 (defn hiccup-panel []
   (let [title "Hello"
         border-color "green"
@@ -15,18 +29,8 @@
               :border (when border-color
                         (str "1px solid " border-color))}}
      [:h1#hiccup.big.centered "Hiccup"]
-     [:div.wrapper
-      {:style {:width 100}
-       :on-click (fn [e]
-                   (js/console.log "Wrapper Div"))}
-      [:div.container>div.inner
-       {:on-click (fn [e]
-                    (.stopPropagation e)
-                    (js/console.log "Inner Div.")
-                    ;;(js/console.log (.-target e))
-                    )}
-       [:p "some content"]
-       [:p "other content"]]]
+     [subcomponent "This is an argument"]
+     [subcomponent "This is an argument"]
      [:p.first-paragraph.bold-text
       "This is a message"]
      [:input {:type :checkbox
