@@ -16,8 +16,15 @@
                         (str "1px solid " border-color))}}
      [:h1#hiccup.big.centered "Hiccup"]
      [:div.wrapper
-      {:style {:width 100}}
+      {:style {:width 100}
+       :on-click (fn [e]
+                   (js/console.log "Wrapper Div"))}
       [:div.container>div.inner
+       {:on-click (fn [e]
+                    (.stopPropagation e)
+                    (js/console.log "Inner Div.")
+                    ;;(js/console.log (.-target e))
+                    )}
        [:p "some content"]
        [:p "other content"]]]
      [:p.first-paragraph.bold-text
@@ -25,6 +32,14 @@
      [:input {:type :checkbox
               :checked false}]
      [:p "Another paragraph."]
-     [:p [:a {:href "#/"} "Home"]]
+     [:p
+      {:on-click (fn [e]
+                   (js/console.log "Paragraph"))}
+      [:a {:href "#/"
+              :on-click (fn [e]
+                          (.preventDefault e)
+                          (.stopPropagation e)
+                          (js/console.log "Link"))}
+          "Home"]]
      [:p "Some more. " [:b "And this is bold"]]]))
 
