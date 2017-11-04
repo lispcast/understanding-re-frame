@@ -15,6 +15,11 @@
               :border (when border-color
                         (str "1px solid " border-color))}}
      [:h1#hiccup.big.centered "Hiccup"]
+     [:div.wrapper
+      {:style {:width 100}}
+      [:div.container>div.inner
+       [:p "some content"]
+       [:p "other content"]]]
      [:p.first-paragraph.bold-text
       "This is a message"]
      [:input {:type :checkbox
