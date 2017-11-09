@@ -2,7 +2,8 @@
   (:require [re-frame.core :as re-frame]
             [understanding-re-frame.subs :as subs]
             [understanding-re-frame.components :as comps]
-            [understanding-re-frame.hiccup :as hiccup]))
+            [understanding-re-frame.hiccup :as hiccup]
+            [understanding-re-frame.forms :as forms]))
 
 
 ;; home
@@ -28,6 +29,7 @@
     :about-panel [about-panel]
     :components-panel [comps/components-panel]
     :hiccup-panel [hiccup/hiccup-panel]
+    :forms-panel [forms/forms-panel]
     [:div]))
 
 (defn show-panel [panel-name]
@@ -40,4 +42,5 @@
      [:hr]
      [:ul
       [:li [:a {:href "#/components"} "Components"]]
-      [:li [:a {:href "#/hiccup"} "Hiccup"]]]]))
+      [:li [:a {:href "#/hiccup"} "Hiccup"]]
+      [:li [:a {:href "#/forms"} "Forms"]]]]))

@@ -29,8 +29,11 @@
   (defroute "/components" []
     (re-frame/dispatch [::events/set-active-panel :components-panel]))
 
-    (defroute "/hiccup" []
+  (defroute "/hiccup" []
     (re-frame/dispatch [::events/set-active-panel :hiccup-panel]))
+
+  (defroute "/forms" []
+    (re-frame/dispatch [::events/set-active-panel :forms-panel]))
 
 
   ;; --------------------
