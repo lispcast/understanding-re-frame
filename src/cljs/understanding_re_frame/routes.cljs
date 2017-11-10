@@ -35,6 +35,9 @@
   (defroute "/forms" []
     (re-frame/dispatch [::events/set-active-panel :forms-panel]))
 
+  (defroute "/atoms" []
+    (re-frame/dispatch [::events/set-active-panel :atoms-panel]))
+
 
   ;; --------------------
   (hook-browser-navigation!))
