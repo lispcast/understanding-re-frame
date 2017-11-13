@@ -7,7 +7,8 @@
                  [compojure "1.5.0"]
                  [yogthos/config "0.8"]
                  [ring "1.4.0"]
-                 [day8.re-frame/http-fx "0.1.4"]]
+                 [day8.re-frame/http-fx "0.1.4"]
+                 [cljsjs/react-input-autosize "2.0.0-1"]]
 
   :plugins [[lein-cljsbuild "1.1.5"]]
 

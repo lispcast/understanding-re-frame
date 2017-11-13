@@ -3,7 +3,8 @@
             [clojure.string :as str]
             [re-frame.core :as rf]
             [day8.re-frame.http-fx]
-            [ajax.core :as ajax]))
+            [ajax.core :as ajax]
+            cljsjs.react-input-autosize))
 
 (rf/reg-event-fx
  :save-image
@@ -42,7 +43,7 @@
   (let [title "Hello"
         border-color "green"
         active? true
-        state (reagent/atom 0)
+        state (reagent/atom {})
         refs (reagent/atom {})]
     (fn []
       [:div#main-content.content.row
@@ -63,6 +64,14 @@
         [:form {:ref #(swap! refs :form %)
                 :on-submit (fn [e]
                              (.preventDefault e))}
+         [:div (pr-str @state)]
+         [:div
+          [:> js/AutosizeInput
+           {:name "autosize"
+            :value (:autosize @state)
+            :onChange (fn [e]
+                         (swap! state assoc :autosize
+                           (-> e .-target .-value)))}]]
          [:input {:type :file
                   :name :image
                   :on-change (fn [e]
