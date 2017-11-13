@@ -36,6 +36,8 @@
     [:p "some content"]
     [:p txt]]])
 
+(def html "<ul><li><b>Some HTML.</b></li><li>Another list item.</li></ul>")
+
 (defn hiccup-panel []
   (let [title "Hello"
         border-color "green"
@@ -49,6 +51,7 @@
                 :border (when border-color
                           (str "1px solid " border-color))}}
        [:h1#hiccup.big.centered "Hiccup"]
+       [:div {:dangerouslySetInnerHTML {:__html html}}]
        [subcomponent "This is an argument "]
        [subcomponent "This is an argument"]
        [:p.first-paragraph.bold-text
@@ -79,5 +82,6 @@
                          (.stopPropagation e)
                          (js/console.log "Link"))}
          "Home"]]
-       [:p "Some more. " [:b "And this is bold"]]])))
+       [:p "Some more. " [:b "And this is bold"]]]
+      )))
 
