@@ -38,6 +38,9 @@
   (defroute "/atoms" []
     (re-frame/dispatch [::events/set-active-panel :atoms-panel]))
 
+  (defroute "/events" []
+    (re-frame/dispatch [::events/set-active-panel :events-panel]))
+
 
   ;; --------------------
   (hook-browser-navigation!))

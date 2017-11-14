@@ -4,7 +4,8 @@
             [understanding-re-frame.components :as comps]
             [understanding-re-frame.hiccup :as hiccup]
             [understanding-re-frame.forms :as forms]
-            [understanding-re-frame.atoms :as atoms]))
+            [understanding-re-frame.atoms :as atoms]
+            [understanding-re-frame.re-frame-events :as events]))
 
 
 ;; home
@@ -32,6 +33,7 @@
     :hiccup-panel [hiccup/hiccup-panel]
     :forms-panel [forms/forms-panel]
     :atoms-panel [atoms/atoms-panel]
+    :events-panel [events/events-panel]
     [:div]))
 
 (defn show-panel [panel-name]
@@ -46,4 +48,5 @@
       [:li [:a {:href "#/components"} "Components"]]
       [:li [:a {:href "#/hiccup"} "Hiccup"]]
       [:li [:a {:href "#/forms"} "Forms"]]
-      [:li [:a {:href "#/atoms"} "Atoms"]]]]))
+      [:li [:a {:href "#/atoms"} "Atoms"]]
+      [:li [:a {:href "#/events"} "Events"]]]]))
