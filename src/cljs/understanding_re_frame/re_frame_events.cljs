@@ -17,6 +17,23 @@
   (fn [new-db]
     (reset! db/app-db new-db)))
 
+(rf/reg-cofx
+  :db
+  (fn [cofx]
+    (assoc cofx :db @db/app-db)))
+
+(rf/reg-cofx
+  :datetime
+  (fn [cofx]
+    (assoc cofx :now (js/Date.))))
+
+(defonce last-tempid (atom 0))
+
+(rf/reg-cofx
+  :tempid
+  (fn [cofx]
+    (assoc cofx :tempid (swap! last-tempid inc))))
+
 (rf/reg-fx
   :dispatch
   rf/dispatch)
@@ -39,10 +56,14 @@
 
 (rf/reg-event-fx
   :buy-product
+  [(rf/inject-cofx :datetime)
+   (rf/inject-cofx :tempid)]
   (fn [cofx [_ item-id]]
     {:db (update-in (:db cofx)
            [:cart :items] conj {:item item-id
-                                :confirmed? false})
+                                :confirmed? false
+                                :time-added (:now cofx)
+                                :id (:tempid cofx)})
      :http-xhrio {:uri (str "http://url.com/product/" item-id "/puchase")
                   :method :post
                   :response-format (ajax/json-response-format {:keywords? true})
