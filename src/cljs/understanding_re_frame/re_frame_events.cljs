@@ -3,13 +3,23 @@
             [clojure.string :as str]
             [re-frame.core :as rf]
             [day8.re-frame.http-fx]
-            [ajax.core :as ajax]))
+            [ajax.core :as ajax]
+            [re-frame.db :as db]))
 
 (def app-state (reagent/atom {}))
 
 (defn ajax-post [url options]
   ;; fake method
   )
+
+(rf/reg-fx
+  :db
+  (fn [new-db]
+    (reset! db/app-db new-db)))
+
+(rf/reg-fx
+  :dispatch
+  rf/dispatch)
 
 (rf/reg-event-db
   :notify-error
