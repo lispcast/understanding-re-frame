@@ -41,6 +41,9 @@
   (defroute "/events" []
     (re-frame/dispatch [::events/set-active-panel :events-panel]))
 
+  (defroute "/subscriptions" []
+    (re-frame/dispatch [::events/set-active-panel :subscriptions-panel]))
+
 
   ;; --------------------
   (hook-browser-navigation!))
