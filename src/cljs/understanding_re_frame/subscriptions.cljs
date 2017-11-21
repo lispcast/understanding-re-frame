@@ -29,23 +29,53 @@
     (:vehicles db)))
 
 (rf/reg-sub
+  :vehicle-ids
+  (fn []
+    (rf/subscribe [:vehicles]))
+  (fn [vehicles]
+    (sort (keys vehicles))))
+
+(rf/reg-sub
+  :vehicle
+  (fn []
+    (rf/subscribe [:vehicles]))
+  (fn [vehicles [_ id]]
+    (get vehicles id)))
+
+(rf/reg-sub
   :likes
   (fn [db]
     (get-in db [:user :likes] #{})))
 
-(defn vehicle-component [id vehicle]
-  (let [likes @(rf/subscribe [:likes])]
+(rf/reg-sub
+  :liked?
+  (fn []
+    (rf/subscribe [:likes]))
+  (fn [likes [_ id]]
+    (contains? likes id)))
+
+(rf/reg-sub
+  :liked-vehicle
+  (fn [[_ id]]
+    [(rf/subscribe [:vehicle id])
+     (rf/subscribe [:liked? id])])
+  (fn [[vehicle liked?]]
+    (assoc vehicle :liked? liked?)))
+
+(defn vehicle-component [id]
+  (let [vehicle @(rf/subscribe [:liked-vehicle id])
+        liked?  (:liked? vehicle)]
    [:div {:style {:display :inline-block
                   :width 80}}
     [:img {:src (:image vehicle)
            :style {:max-width "100%"}}]
     [:a {:on-click (fn [e]
                      (.preventDefault e)
-                     (if (contains? likes id)
+                     (if liked?
                        (rf/dispatch [:unlike id])
                        (rf/dispatch [:like id])))
          :href "#"
-         :style {:color (if (contains? likes id)
+         :style {:color (if liked?
                           :red
                           :grey)
                  :text-decoration :none}}
@@ -56,9 +86,9 @@
    [:h1 "Subscriptions"]
    [:div
     (doall
-      (for [[id vehicle] @(rf/subscribe [:vehicles])]
+      (for [id @(rf/subscribe [:vehicle-ids])]
         [:span {:key id}
-         [vehicle-component id vehicle]]))
+         [vehicle-component id]]))
     [:div
      (pr-str @(rf/subscribe [:likes]))]]])
 
