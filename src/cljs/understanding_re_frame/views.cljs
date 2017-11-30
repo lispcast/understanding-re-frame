@@ -6,7 +6,8 @@
             [understanding-re-frame.forms :as forms]
             [understanding-re-frame.atoms :as atoms]
             [understanding-re-frame.re-frame-events :as events]
-            [understanding-re-frame.subscriptions :as subscriptions]))
+            [understanding-re-frame.subscriptions :as subscriptions]
+            [understanding-re-frame.interceptors :as interceptors]))
 
 
 ;; home
@@ -36,6 +37,7 @@
     :atoms-panel [atoms/atoms-panel]
     :events-panel [events/events-panel]
     :subscriptions-panel [subscriptions/subscriptions-panel]
+    :interceptors-panel [interceptors/interceptors-panel]
     [:div]))
 
 (defn show-panel [panel-name]
@@ -52,4 +54,6 @@
       [:li [:a {:href "#/forms"} "Forms"]]
       [:li [:a {:href "#/atoms"} "Atoms"]]
       [:li [:a {:href "#/events"} "Events"]]
-      [:li [:a {:href "#/subscriptions"} "Subscriptions"]]]]))
+      [:li [:a {:href "#/subscriptions"} "Subscriptions"]]
+      [:li [:a {:href "#/interceptors"} "Interceptors"]]]]))
+
