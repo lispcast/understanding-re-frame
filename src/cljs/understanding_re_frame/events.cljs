@@ -2,10 +2,11 @@
   (:require [re-frame.core :as re-frame]
             [understanding-re-frame.db :as db]))
 
-(re-frame/reg-event-db
- ::initialize-db
- (fn  [_ _]
-   db/default-db))
+(re-frame/reg-event-fx
+ ::load-app
+ (fn  [{:keys [db]} _]
+   {:db (merge db db/default-db)
+    :ajax {}}))
 
 (re-frame/reg-event-db
  ::set-active-panel
