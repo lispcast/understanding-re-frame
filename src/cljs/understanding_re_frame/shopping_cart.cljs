@@ -4,24 +4,42 @@
 (re-frame/reg-event-db
   :init-products
   (fn [db]
-    (assoc db :products [{:id 0
-                          :name "Pie"}
-                         {:id 1
-                          :name "Cake"}
-                         {:id 2
-                          :name "Ice Cream"}])))
+    (assoc db :products {0 {:id 0
+                            :name "Pie"}
+                         1 {:id 1
+                            :name "Cake"}
+                         2 {:id 2
+                            :name "Ice Cream"}})))
+
+(re-frame/reg-sub
+  :product-index
+  (fn [db]
+    (:products db)))
 
 (re-frame/reg-sub
   :products
+  (fn []
+    (re-frame/subscribe [:product-index]))
+  (fn [pidx]
+    (vals pidx)))
+
+(re-frame/reg-sub
+  :shopping-cart
   (fn [db]
-    (:products db)))
+    (:shopping-cart db)))
 
 (re-frame/dispatch-sync [:init-products])
 
 (re-frame/reg-sub
   :shopping-cart/items
-  (fn [db]
-    (get-in db [:shopping-cart :items] [])))
+  (fn []
+    [(re-frame/subscribe [:product-index])
+     (re-frame/subscribe [:shopping-cart])])
+  (fn [[pidx cart]]
+    (for [[id quantity]
+          (get-in cart [:items] {})]
+      {:quantity quantity
+       :product  (get pidx id)})))
 
 (re-frame/reg-sub
   :shopping-cart/items-count
@@ -63,7 +81,7 @@
 (re-frame/reg-event-db
   :shopping-cart/add-item
   (fn [db [_ product]]
-    (update-in db [:shopping-cart :items] (fnil conj []) product)))
+    (update-in db [:shopping-cart :items product] (fnil inc 0))))
 
 (defn cart-icon []
   [:div
@@ -76,9 +94,15 @@
      (for [item items]
        [:li (:name item) " " (:price item)])]))
 
+(re-frame/reg-event-db
+  :shopping-cart/dec-item
+  (fn [db [_ item-id]]
+    (if (<= (get-in db [:shopping-cart :items item-id]) 1)
+      (update-in db [:shopping-cart :items] dissoc item-id)
+      (update-in db [:shopping-cart :items item-id] dec))))
+
 (defn panel []
   [:div
-
    [:div
     [:h1 "Products"]
     [:ol
@@ -89,15 +113,31 @@
                :on-click #(do
                             (.preventDefault %)
                             (re-frame/dispatch [:shopping-cart/add-item
-                                                product]))}
+                                                (:id product)]))}
            "Add to cart"]]))]]
 
+   [:hr]
+   [:div (pr-str @(re-frame/subscribe [:products]))]
    [:hr]
 
    [:div
     [:h1 "Shopping Cart"]
+    [:div (pr-str @(re-frame/subscribe [:shopping-cart/items]))]
     [:ol
      (doall
        (for [item @(re-frame/subscribe [:shopping-cart/items])]
          [:li
-          (:name item)]))]]])
+          (get-in item [:product :name])
+          " -- "
+          (get-in item [:quantity])
+
+          " "
+          [:a {:href "#"
+               :on-click #(do
+                            (.preventDefault %)
+                            (re-frame/dispatch [:shopping-cart/dec-item
+                                                (:id (:product item))]))}
+           "Rem 1"]]))
+     ]]
+   [:hr]
+   [:div (pr-str @(re-frame/subscribe [:shopping-cart]))]])
