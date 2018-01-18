@@ -47,6 +47,9 @@
   (defroute "/interceptors" []
     (re-frame/dispatch [::events/set-active-panel :interceptors-panel]))
 
+  (defroute "/shopping-cart" []
+    (re-frame/dispatch [::events/set-active-panel :shopping-cart-panel]))
+
 
   ;; --------------------
   (hook-browser-navigation!))
