@@ -4,24 +4,31 @@
 (re-frame/reg-event-db
   :init-products
   (fn [db]
-    (assoc db :products {0 {:id 0
-                            :name "Pie"}
-                         1 {:id 1
-                            :name "Cake"}
-                         2 {:id 2
-                            :name "Ice Cream"}})))
+    (assoc db :products {:index {0 {:id 0
+                                    :name "Pie"}
+                                 1 {:id 1
+                                    :name "Cake"}
+                                 2 {:id 2
+                                    :name "Ice Cream"}}
+                         :order [1 2 0]})))
 
 (re-frame/reg-sub
   :product-index
   (fn [db]
-    (:products db)))
+    (get-in db [:products :index] {})))
+
+(re-frame/reg-sub
+  :product-order
+  (fn [db]
+    (get-in db [:products :order] [])))
 
 (re-frame/reg-sub
   :products
   (fn []
-    (re-frame/subscribe [:product-index]))
-  (fn [pidx]
-    (vals pidx)))
+    [(re-frame/subscribe [:product-index])
+     (re-frame/subscribe [:product-order])])
+  (fn [[pidx pord]]
+    (map pidx pord)))
 
 (re-frame/reg-sub
   :shopping-cart
@@ -36,9 +43,8 @@
     [(re-frame/subscribe [:product-index])
      (re-frame/subscribe [:shopping-cart])])
   (fn [[pidx cart]]
-    (for [[id quantity]
-          (get-in cart [:items] {})]
-      {:quantity quantity
+    (for [id (get-in cart [:items :order] [])]
+      {:quantity (get-in cart [:items :index id] 0)
        :product  (get pidx id)})))
 
 (re-frame/reg-sub
@@ -81,7 +87,19 @@
 (re-frame/reg-event-db
   :shopping-cart/add-item
   (fn [db [_ product]]
-    (update-in db [:shopping-cart :items product] (fnil inc 0))))
+    (-> db
+      (update-in [:shopping-cart :items :index product] (fnil inc 0))
+      (update-in [:shopping-cart :items :order]
+        (fn [order]
+          (cond
+            (nil? order)
+            [product]
+
+            (get-in db [:shopping-cart :items :index product])
+            order
+
+            :else
+            (conj order product)))))))
 
 (defn cart-icon []
   [:div
@@ -97,9 +115,13 @@
 (re-frame/reg-event-db
   :shopping-cart/dec-item
   (fn [db [_ item-id]]
-    (if (<= (get-in db [:shopping-cart :items item-id]) 1)
-      (update-in db [:shopping-cart :items] dissoc item-id)
-      (update-in db [:shopping-cart :items item-id] dec))))
+    (if (<= (get-in db [:shopping-cart :items :index item-id]) 1)
+      (-> db
+        (update-in [:shopping-cart :items :index] dissoc item-id)
+        (update-in [:shopping-cart :items :order]
+          (fn [order]
+            (vec (remove #(= item-id %) order)))))
+      (update-in db [:shopping-cart :items :index item-id] dec))))
 
 (defn panel []
   [:div
