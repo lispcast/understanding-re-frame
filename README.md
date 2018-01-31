@@ -1,8 +1,28 @@
-# understanding-re-frame
+# Understanding Re-frame
 
-A [re-frame](https://github.com/Day8/re-frame) application designed to ... well, that part is up to you.
+This repository is code to accompany the the [*Understanding Re-frame*](https://purelyfunctional.tv/courses/understanding-re-frame/) course on [PurelyFunctional.tv](https://purelyfunctional.tv).
 
 ## Development Mode
+
+Clone this repository:
+
+```bash
+$CMD git clone git@github.com:lispcast/understanding-re-frame.git
+```
+
+### Start Figwheel from the command-line
+
+Change to the directory:
+
+```bash
+$CMD cd understanding-re-frame
+```
+
+Run Figwheel:
+
+```bash
+$CMD lein figwheel
+```
 
 ### Start Cider from Emacs:
 
@@ -17,53 +37,3 @@ Put this in your Emacs config file:
 
 Navigate to a clojurescript file and start a figwheel REPL with `cider-jack-in-clojurescript` or (`C-c M-J`)
 
-### Run application:
-
-```
-lein clean
-lein figwheel dev
-```
-
-Figwheel will automatically push cljs changes to the browser.
-
-Wait a bit, then browse to [http://localhost:3449](http://localhost:3449).
-
-### Run tests:
-
-```
-lein clean
-lein doo phantom test once
-```
-
-The above command assumes that you have [phantomjs](https://www.npmjs.com/package/phantomjs) installed. However, please note that [doo](https://github.com/bensu/doo) can be configured to run cljs.test in many other JS environments (chrome, ie, safari, opera, slimer, node, rhino, or nashorn).
-
-## Production Build
-
-```
-lein clean
-lein uberjar
-```
-
-That should compile the clojurescript code first, and then create the standalone jar.
-
-When you run the jar you can set the port the ring server will use by setting the environment variable PORT.
-If it's not set, it will run on port 3000 by default.
-
-To deploy to heroku, first create your app:
-
-```
-heroku create
-```
-
-Then deploy the application:
-
-```
-git push heroku master
-```
-
-To compile clojurescript to javascript:
-
-```
-lein clean
-lein cljsbuild once min
-```
