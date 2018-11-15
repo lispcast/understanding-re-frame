@@ -61,7 +61,7 @@
                 :checked false}]
        [:p "Another paragraph."]
        [:div.inner
-        [:form {:ref #(swap! refs :form %)
+        [:form {:ref #(swap! refs assoc :form %)
                 :on-submit (fn [e]
                              (.preventDefault e))}
          [:div (pr-str @state)]
