@@ -1,13 +1,13 @@
 # Understanding Re-frame
 
-This repository is code to accompany the the [*Understanding Re-frame*](https://purelyfunctional.tv/courses/understanding-re-frame/) course on [PurelyFunctional.tv](https://purelyfunctional.tv).
+This repository is code to accompany the the [_Understanding Re-frame_](https://purelyfunctional.tv/courses/understanding-re-frame/) course on [PurelyFunctional.tv](https://purelyfunctional.tv).
 
 ## Development Mode
 
 Clone this repository:
 
 ```bash
-$CMD git clone git@github.com:lispcast/understanding-re-frame.git
+$CMD git clone https://github.com/lispcast/understanding-re-frame.git
 ```
 
 ### Start Figwheel from the command-line
@@ -36,4 +36,3 @@ Put this in your Emacs config file:
 ```
 
 Navigate to a clojurescript file and start a figwheel REPL with `cider-jack-in-clojurescript` or (`C-c M-J`)
-
