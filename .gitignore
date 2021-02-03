@@ -4,3 +4,7 @@
 /resources/public/js/compiled
 out
 /.nrepl-port
+.lsp/
+.clj-kondo/
+.DS_store
+.calva/
