@@ -24,15 +24,18 @@ Run Figwheel:
 $CMD lein figwheel
 ```
 
-### Start Cider from Emacs:
+## License
 
-Put this in your Emacs config file:
+Star Wars vehicle and character images are from the [Star
+Wars Databank](https://www.starwars.com/databank). A cache
+of those images is provided here for those who wish to work
+on this course offline. These images are copyrighted by
+Lucasfilm Ltd and are used here for educational purposes.
 
-```
-(setq cider-cljs-lein-repl
-	"(do (require 'figwheel-sidecar.repl-api)
-         (figwheel-sidecar.repl-api/start-figwheel!)
-         (figwheel-sidecar.repl-api/cljs-repl))")
-```
+[![CC0](http://i.creativecommons.org/p/zero/1.0/88x31.png)](http://creativecommons.org/publicdomain/zero/1.0/)
 
-Navigate to a clojurescript file and start a figwheel REPL with `cider-jack-in-clojurescript` or (`C-c M-J`)
+To the extent possible under law, the person who associated
+CC0 with this work has waived all copyright and related or
+neighboring rights to the code in this repository.
+
+See the `LICENSE` file for more information.
