@@ -43,7 +43,7 @@
   (let [title "Hello"
         border-color "green"
         active? true
-        state (reagent/atom {})
+        state (reagent/atom 0)
         refs (reagent/atom {})]
     (fn []
       [:div#main-content.content.row
@@ -64,10 +64,11 @@
         [:form {:ref #(swap! refs assoc :form %)
                 :on-submit (fn [e]
                              (.preventDefault e))}
-         [:> js/MaterialUI.Button {:variant "contained"
-                                   :color "primary"}
-          "Hello world"]
-         [:div (pr-str @state)]]
+         [:div
+          [:> js/MaterialUI.Button {:variant "contained"
+                                    :color "primary"
+                                    :onClick (fn [] (js/alert "Hello world"))}
+           "Hello World"]]
          [:input {:type :file
                   :name :image
                   :on-change (fn [e]
@@ -75,7 +76,7 @@
                                (js/console.log (:form @refs))
                                (rf/dispatch [:save-image
                                              (js/FormData.
-                                              (:form @refs))]))}]]
+                                              (:form @refs))]))}]]]
        
        
        [:p
