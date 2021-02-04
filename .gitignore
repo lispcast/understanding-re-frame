@@ -8,3 +8,8 @@ out
 .clj-kondo/
 .DS_store
 .calva/
+figwheel_server.log
+.lein-deps-sum
+.lein-repl-history
+.lein-plugins/
+.repl

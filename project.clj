@@ -1,82 +1,35 @@
 (defproject understanding-re-frame "0.1.0-SNAPSHOT"
-  :dependencies [[org.clojure/clojure "1.10.0"]
-                 [org.clojure/clojurescript "1.10.439"]
-                 [reagent "0.7.0"]
-                 [re-frame "0.10.2"]
-                 [secretary "1.2.3"]
-                 [compojure "1.5.0"]
-                 [yogthos/config "0.8"]
-                 [ring "1.4.0"]
-                 [day8.re-frame/http-fx "0.1.4"]
-                 [cljsjs/react-input-autosize "2.0.0-1"]]
+  :description "Code to accompany Understanding Re-frame, a course on PurelyFunctional.tv"
+  :url "https://purelyfunctional.tv/courses/understanding-re-frame/"
+  :license {:name "CC0 1.0 Universal (CC0 1.0) Public Domain Dedication"
+            :url "http://creativecommons.org/publicdomain/zero/1.0/"}
 
-  :plugins [[lein-cljsbuild "1.1.5"]]
+  :min-lein-version "2.7.1"
 
-  :min-lein-version "2.5.3"
+  :dependencies [[org.clojure/clojure "1.10.2"]
+                 [org.clojure/clojurescript "1.10.764"]
+                 [re-frame "1.1.2"]
+                 [clj-commons/secretary "1.2.4"]
+                 [compojure "1.6.2"]
+                 [day8.re-frame/http-fx "0.2.2"]
+                 [com.bhauman/figwheel-main "0.2.12"]
+                 [cljsjs/material-ui "4.10.2-0"]]
 
-  :source-paths ["src/clj"]
+  :source-paths ["src"]
 
-  :clean-targets ^{:protect false} ["resources/public/js/compiled" "target"
-                                    "test/js"]
+  :aliases {"fig-dev"   ["trampoline" "run" "-m" "figwheel.main" "--" "--build" "dev" "--repl"]
+            "fig-build" ["trampoline" "run" "-m" "figwheel.main" "--" "-O" "advanced" "--build-once" "dev"]}
 
-  :figwheel {:css-dirs ["resources/public/css"]
-             :ring-handler understanding-re-frame.handler/dev-handler}
+  :clean-targets ^{:protect false} ["resources/public/js/compiled"
+                                    :target-path]
 
-  :repl-options {:nrepl-middleware [cemerick.piggieback/wrap-cljs-repl]}
-
-  :profiles
-  {:dev
-   {:dependencies [[binaryage/devtools "0.9.4"]
-                   [cljsjs/d3 "4.3.0-5"]
-                   [day8.re-frame/trace "0.1.7"]
-                   
-                   [figwheel-sidecar "0.5.18"]
-                   [com.cemerick/piggieback "0.2.2"]
-                   [re-frisk "0.5.0"]]
-
-    :plugins      [[lein-figwheel "0.5.18"]
-                   [lein-doo "0.1.8"]]}}
-
-  :cljsbuild
-  {:builds
-   [{:id           "dev"
-     :source-paths ["src/cljs"]
-     :figwheel     {:on-jsload "understanding-re-frame.core/mount-root"}
-     :compiler     {:main                 understanding-re-frame.core
-                    :output-to            "resources/public/js/compiled/app.js"
-                    :output-dir           "resources/public/js/compiled/out"
-                    :asset-path           "js/compiled/out"
-                    :source-map-timestamp true
-                    :preloads             [devtools.preload
-                                           day8.re-frame.trace.preload
-                                           re-frisk.preload
-                                           ]
-                    :closure-defines      {"re_frame.trace.trace_enabled_QMARK_" true}
-                    :external-config      {:devtools/config {:features-to-install :all}}
-                    }}
-
-    {:id           "min"
-     :source-paths ["src/cljs"]
-     :jar true
-     :compiler     {:main            understanding-re-frame.core
-                    :output-to       "resources/public/js/compiled/app.js"
-                    :optimizations   :advanced
-                    :closure-defines {goog.DEBUG false}
-                    :pretty-print    false}}
-
-    {:id           "test"
-     :source-paths ["src/cljs" "test/cljs"]
-     :compiler     {:main          understanding-re-frame.runner
-                    :output-to     "resources/public/js/compiled/test.js"
-                    :output-dir    "resources/public/js/compiled/test/out"
-                    :optimizations :none}}
-    ]}
-
-  :main understanding-re-frame.server
-
-  :aot [understanding-re-frame.server]
-
-  :uberjar-name "understanding-re-frame.jar"
-
-  :prep-tasks [["cljsbuild" "once" "min"] "compile"]
-  )
+  ;; setting up nREPL for Figwheel and ClojureScript dev
+  :profiles {:dev {:dependencies [[cider/piggieback "0.5.2"]]
+                   ;; need to add dev source path here to get user.clj loaded
+                   :source-paths ["src" "dev"]
+                   ;; for CIDER
+                   :plugins [[cider/cider-nrepl "0.25.8"]]
+                   :repl-options {:nrepl-middleware [cider.piggieback/wrap-cljs-repl]}
+                   ;; need to add the compliled assets to the :clean-targets
+                   :clean-targets ^{:protect false} ["resources/public/js/compiled"
+                                                     :target-path]}})
