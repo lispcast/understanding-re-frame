@@ -21,7 +21,7 @@ $CMD cd understanding-re-frame
 Run Figwheel:
 
 ```bash
-$CMD lein figwheel
+$CMD lein fig-dev
 ```
 
 ## License
