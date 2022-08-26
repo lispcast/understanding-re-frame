@@ -12,7 +12,7 @@
                  [clj-commons/secretary "1.2.4"]
                  [compojure "1.6.2"]
                  [day8.re-frame/http-fx "0.2.2"]
-                 [com.bhauman/figwheel-main "0.2.12"]
+                 [com.bhauman/figwheel-main "0.2.18"]
                  [cljsjs/material-ui "4.10.2-0"]]
 
   :source-paths ["src"]
