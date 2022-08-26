@@ -1,69 +1,41 @@
-# understanding-re-frame
+# Understanding Re-frame
 
-A [re-frame](https://github.com/Day8/re-frame) application designed to ... well, that part is up to you.
+This repository is code to accompany the the [_Understanding Re-frame_](https://purelyfunctional.tv/courses/understanding-re-frame/) course on [PurelyFunctional.tv](https://purelyfunctional.tv).
 
 ## Development Mode
 
-### Start Cider from Emacs:
+Clone this repository:
 
-Put this in your Emacs config file:
-
-```
-(setq cider-cljs-lein-repl
-	"(do (require 'figwheel-sidecar.repl-api)
-         (figwheel-sidecar.repl-api/start-figwheel!)
-         (figwheel-sidecar.repl-api/cljs-repl))")
+```bash
+$CMD git clone https://github.com/lispcast/understanding-re-frame.git
 ```
 
-Navigate to a clojurescript file and start a figwheel REPL with `cider-jack-in-clojurescript` or (`C-c M-J`)
+### Start Figwheel from the command-line
 
-### Run application:
+Change to the directory:
 
-```
-lein clean
-lein figwheel dev
-```
-
-Figwheel will automatically push cljs changes to the browser.
-
-Wait a bit, then browse to [http://localhost:3449](http://localhost:3449).
-
-### Run tests:
-
-```
-lein clean
-lein doo phantom test once
+```bash
+$CMD cd understanding-re-frame
 ```
 
-The above command assumes that you have [phantomjs](https://www.npmjs.com/package/phantomjs) installed. However, please note that [doo](https://github.com/bensu/doo) can be configured to run cljs.test in many other JS environments (chrome, ie, safari, opera, slimer, node, rhino, or nashorn).
+Run Figwheel:
 
-## Production Build
-
-```
-lein clean
-lein uberjar
+```bash
+$CMD lein fig-dev
 ```
 
-That should compile the clojurescript code first, and then create the standalone jar.
+## License
 
-When you run the jar you can set the port the ring server will use by setting the environment variable PORT.
-If it's not set, it will run on port 3000 by default.
+Star Wars vehicle and character images are from the [Star
+Wars Databank](https://www.starwars.com/databank). A cache
+of those images is provided here for those who wish to work
+on this course offline. These images are copyrighted by
+Lucasfilm Ltd and are used here for educational purposes.
 
-To deploy to heroku, first create your app:
+[![CC0](http://i.creativecommons.org/p/zero/1.0/88x31.png)](http://creativecommons.org/publicdomain/zero/1.0/)
 
-```
-heroku create
-```
+To the extent possible under law, the person who associated
+CC0 with this work has waived all copyright and related or
+neighboring rights to the code in this repository.
 
-Then deploy the application:
-
-```
-git push heroku master
-```
-
-To compile clojurescript to javascript:
-
-```
-lein clean
-lein cljsbuild once min
-```
+See the `LICENSE` file for more information.
